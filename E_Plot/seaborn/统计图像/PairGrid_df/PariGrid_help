@@ -1,0 +1,115 @@
+class PairGrid(Grid)
+ |  Subplot grid for plotting pairwise relationships in a dataset.
+ |
+ |  Method resolution order:
+ |      PairGrid
+ |      Grid
+ |      builtins.object
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, data, hue=None, hue_order=None, palette=None, hue_kws=None, vars=None, x_vars=None, y_vars=None, diag_sharey=True, size=2.5, aspect=1, despine=True, dropna=True)
+ |      Initialize the plot figure and PairGrid object.
+ |
+ |      Parameters
+ |      ----------
+ |      data : DataFrame
+ |          Tidy (long-form) dataframe where each column is a variable and
+ |          each row is an observation.
+ |      hue : string (variable name), optional
+ |          Variable in ``data`` to map plot aspects to different colors.
+ |      hue_order : list of strings
+ |          Order for the levels of the hue variable in the palette
+ |      palette : dict or seaborn color palette
+ |          Set of colors for mapping the ``hue`` variable. If a dict, keys
+ |          should be values  in the ``hue`` variable.
+ |      hue_kws : dictionary of param -> list of values mapping
+ |          Other keyword arguments to insert into the plotting call to let
+ |          other plot attributes vary across levels of the hue variable (e.g.
+ |          the markers in a scatterplot).
+ |      vars : list of variable names, optional
+ |          Variables within ``data`` to use, otherwise use every column with
+ |          a numeric datatype.
+ |      size : scalar, optional
+ |          Height (in inches) of each facet.
+ |      aspect : scalar, optional
+ |          Aspect * size gives the width (in inches) of each facet.
+ |      {x, y}_vars : lists of variable names, optional
+ |          Variables within ``data`` to use separately for the rows and
+ |          columns of the figure; i.e. to make a non-square plot.
+ |      despine : boolean, optional
+ |          Remove the top and right spines from the plots.
+ |      dropna : boolean, optional
+ |          Drop missing values from the data before plotting.
+
+ |  map(self, func, **kwargs)
+ |      Plot with the same function in every subplot.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable plotting function
+ |          Must take x, y arrays as positional arguments and draw onto the
+ |          "currently active" matplotlib Axes.
+ |
+ |  map_diag(self, func, **kwargs)
+ |      Plot with a univariate function on each diagonal subplot.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable plotting function
+ |          Must take an x array as a positional arguments and draw onto the
+ |          "currently active" matplotlib Axes. There is a special case when
+ |          using a ``hue`` variable and ``plt.hist``; the histogram will be
+ |          plotted with stacked bars.
+ |
+ |  map_lower(self, func, **kwargs)
+ |      Plot with a bivariate function on the lower diagonal subplots.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable plotting function
+ |          Must take x, y arrays as positional arguments and draw onto the
+ |          "currently active" matplotlib Axes.
+ |
+ |  map_offdiag(self, func, **kwargs)
+ |      Plot with a bivariate function on the off-diagonal subplots.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable plotting function
+ |          Must take x, y arrays as positional arguments and draw onto the
+ |          "currently active" matplotlib Axes.
+ |
+ |  map_upper(self, func, **kwargs)
+ |      Plot with a bivariate function on the upper diagonal subplots.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable plotting function
+ |          Must take x, y arrays as positional arguments and draw onto the
+ |          "currently active" matplotlib Axes.
+ |
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from Grid:
+ |
+ |  add_legend(self, legend_data=None, title=None, label_order=None, **kwargs)
+ |      Draw a legend, maybe placing it outside axes and resizing the figure.
+ |
+ |      Parameters
+ |      ----------
+ |      legend_data : dict, optional
+ |          Dictionary mapping label names to matplotlib artist handles. The
+ |          default reads from ``self._legend_data``.
+ |      title : string, optional
+ |          Title for the legend. The default reads from ``self._hue_var``.
+ |      label_order : list of labels, optional
+ |          The order that the legend entries should appear in. The default
+ |          reads from ``self.hue_names`` or sorts the keys in ``legend_data``.
+ |      kwargs : key, value pairings
+ |          Other keyword arguments are passed to the underlying legend methods
+ |          on the Figure or Axes object.
+ |
+ |      Returns
+ |      -------
+ |      self : Grid instance
+ |          Returns self for easy chaining.

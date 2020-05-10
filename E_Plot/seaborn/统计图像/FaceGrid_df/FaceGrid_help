@@ -1,0 +1,152 @@
+class FacetGrid(Grid)
+ |  Subplot grid for plotting conditional relationships.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, data, row=None, col=None, hue=None, col_wrap=None, sharex=True, sharey=True, size=3, aspect=1, palette=None, row_order=None, col_order=None, hue_order=None, hue_kws=None, dropna=True, legend_out=True, despine=True, margin_titles=False, xlim=None, ylim=None, subplot_kws=None, gridspec_kws=None)
+ |      Initialize the matplotlib figure and FacetGrid object.
+ |
+ |      The :class:`FacetGrid` is an object that links a Pandas DataFrame to
+ |      a matplotlib figure with a particular structure.
+ |
+ |      Parameters
+ |      ----------
+ |      data : DataFrame
+ |          Tidy ("long-form") dataframe where each column is a variable and each
+ |          row is an observation.
+ |      row, col, hue : strings
+ |          Variables that define subsets of the data, which will be drawn on
+ |          separate facets in the grid. See the ``*_order`` parameters to
+ |          control the order of levels of this variable.
+ |      col_wrap : int, optional
+ |          "Wrap" the column variable at this width, so that the column facets
+ |          span multiple rows. Incompatible with a ``row`` facet.
+ |      share{x,y} : bool, optional
+ |          If true, the facets will share y axes across columns and/or x axes
+ |          across rows.
+ |      size : scalar, optional
+ |          Height (in inches) of each facet. See also: ``aspect``.
+ |      aspect : scalar, optional
+ |          Aspect ratio of each facet, so that ``aspect * size`` gives the width
+ |          of each facet in inches.
+ |      palette : palette name, list, or dict, optional
+ |          Colors to use for the different levels of the ``hue`` variable. Should
+ |          be something that can be interpreted by :func:`color_palette`, or a
+ |          dictionary mapping hue levels to matplotlib colors.
+ |      {row,col,hue}_order : lists, optional
+ |          Order for the levels of the faceting variables. By default, this
+ |          will be the order that the levels appear in ``data`` or, if the
+ |          variables are pandas categoricals, the category order.
+ |      hue_kws : dictionary of param -> list of values mapping
+ |          Other keyword arguments to insert into the plotting call to let
+ |          other plot attributes vary across levels of the hue variable (e.g.
+ |          the markers in a scatterplot).
+ |      legend_out : bool, optional
+ |          If ``True``, the figure size will be extended, and the legend will be
+ |          drawn outside the plot on the center right.
+ |      despine : boolean, optional
+ |          Remove the top and right spines from the plots.
+ |      margin_titles : bool, optional
+ |          If ``True``, the titles for the row variable are drawn to the right of
+ |          the last column. This option is experimental and may not work in all
+ |          cases.
+ |      {x, y}lim: tuples, optional
+ |          Limits for each of the axes on each facet (only relevant when
+ |          share{x, y} is True.
+ |      subplot_kws : dict, optional
+ |          Dictionary of keyword arguments passed to matplotlib subplot(s)
+ |          methods.
+ |      gridspec_kws : dict, optional
+ |          Dictionary of keyword arguments passed to matplotlib's ``gridspec``
+ |          module (via ``plt.subplots``). Requires matplotlib >= 1.4 and is
+ |          ignored if ``col_wrap`` is not ``None``.
+ |
+ |  despine(self, **kwargs)
+ |      Remove axis spines from the facets.
+ |
+ |  map(self, func, *args, **kwargs)
+ |      Apply a plotting function to each facet's subset of the data.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable
+ |          A plotting function that takes data and keyword arguments. It
+ |          must plot to the currently active matplotlib Axes and take a
+ |          `color` keyword argument. If faceting on the `hue` dimension,
+ |          it must also take a `label` keyword argument.
+ |      args : strings
+ |          Column names in self.data that identify variables with data to
+ |          plot. The data for each variable is passed to `func` in the
+ |          order the variables are specified in the call.
+ |      kwargs : keyword arguments
+ |          All keyword arguments are passed to the plotting function.
+ |
+ |      Returns
+ |      -------
+ |      self : object
+ |          Returns self.
+ |
+ |  set_axis_labels(self, x_var=None, y_var=None)
+ |      Set axis labels on the left column and bottom row of the grid.
+ |
+ |  set_titles(self, template=None, row_template=None, col_template=None, **kwargs)
+ |      Draw titles either above each facet or on the grid margins.
+ |
+ |      Parameters
+ |      ----------
+ |      template : string
+ |          Template for all titles with the formatting keys {col_var} and
+ |          {col_name} (if using a `col` faceting variable) and/or {row_var}
+ |          and {row_name} (if using a `row` faceting variable).
+ |      row_template:
+ |          Template for the row variable when titles are drawn on the grid
+ |          margins. Must have {row_var} and {row_name} formatting keys.
+ |      col_template:
+ |          Template for the row variable when titles are drawn on the grid
+ |          margins. Must have {col_var} and {col_name} formatting keys.
+ |
+ |      Returns
+ |      -------
+ |      self: object
+ |          Returns self.
+ |
+ |  set_xlabels(self, label=None, **kwargs)
+ |      Label the x axis on the bottom row of the grid.
+ |
+ |  set_xticklabels(self, labels=None, step=None, **kwargs)
+ |      Set x axis tick labels on the bottom row of the grid.
+ |
+ |  set_ylabels(self, label=None, **kwargs)
+ |      Label the y axis on the left column of the grid.
+ |
+ |  set_yticklabels(self, labels=None, **kwargs)
+ |      Set y axis tick labels on the left column of the grid.
+ |
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |
+ |  ax
+ |      Easy access to single axes.
+ |
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from Grid:
+ |
+ |  add_legend(self, legend_data=None, title=None, label_order=None, **kwargs)
+ |      Draw a legend, maybe placing it outside axes and resizing the figure.
+ |
+ |      Parameters
+ |      ----------
+ |      legend_data : dict, optional
+ |          Dictionary mapping label names to matplotlib artist handles. The
+ |          default reads from ``self._legend_data``.
+ |      title : string, optional
+ |          Title for the legend. The default reads from ``self._hue_var``.
+ |      label_order : list of labels, optional
+ |          The order that the legend entries should appear in. The default
+ |          reads from ``self.hue_names`` or sorts the keys in ``legend_data``.
+ |      kwargs : key, value pairings
+ |          Other keyword arguments are passed to the underlying legend methods
+ |          on the Figure or Axes object.
+ |
+ |  set(self, **kwargs)
+ |      Set attributes on each subplot Axes.

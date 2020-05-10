@@ -1,0 +1,35 @@
+seaborn.kdeplot(data, data2=None, shade=False, vertical=False, kernel='gau', bw='scott',
+                gridsize=100, cut=3, clip=None, legend=True, cumulative=False, shade_lowest=True,
+                cbar=False, cbar_ax=None, cbar_kws=None, ax=None, **kwargs)
+Fit and plot a univariate or bivariate kernel density estimate.
+
+Parameters:
+    data : 1d array-like
+        Input data.
+
+    data2: 1d array-like, optional
+        Second input data. If present, a bivariate KDE will be estimated.
+
+    shade : bool, optional
+        If True, shade in the area under the KDE curve (or draw with filled contours when data is bivariate).
+
+    vertical : bool, optional
+        If True, density is on x-axis.
+
+    kernel : {‘gau’ | ‘cos’ | ‘biw’ | ‘epa’ | ‘tri’ | ‘triw’ }, optional
+        Code for shape of kernel to fit with. Bivariate KDE can only use gaussian kernel.
+
+    bw : {‘scott’ | ‘silverman’ | scalar | pair of scalars }, optional
+        Name of reference method to determine kernel size, scalar factor, or scalar for each dimension of the bivariate plot. Note that the underlying computational libraries have different interperetations for this parameter: statsmodels uses it directly, but scipy treats it as a scaling factor for the standard deviation of the data.
+
+    shade_lowest : bool, optional
+        If True, shade the lowest contour of a bivariate KDE plot. Not relevant when drawing a univariate plot or when shade=False. Setting this to False can be useful when you want multiple densities on the same Axes.
+
+    cbar : bool, optional
+        If True and drawing a bivariate KDE plot, add a colorbar.
+
+    cbar_kws : dict, optional
+        Keyword arguments for fig.colorbar().
+
+    ax : matplotlib axes, optional
+        Axes to plot on, otherwise uses current axes.

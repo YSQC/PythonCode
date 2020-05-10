@@ -1,0 +1,114 @@
+lmplot(x, y, data, hue=None, col=None, row=None, palette=None, col_wrap=None, size=5, aspect=1,
+        markers='o', sharex=True, sharey=True, hue_order=None, col_order=None, row_order=None,
+        legend=True, legend_out=True, x_estimator=None, x_bins=None, x_ci='ci', scatter=True,
+        fit_reg=True, ci=95, n_boot=1000, units=None, order=1, logistic=False, lowess=False,
+        robust=False, logx=False, x_partial=None, y_partial=None, truncate=False, x_jitter=None,
+        y_jitter=None, scatter_kws=None, line_kws=None)
+    Plot data and regression model fits across a FacetGrid.
+
+    This function combines :func:`regplot` and :class:`FacetGrid`. It is
+    intended as a convenient interface to fit regression models across
+    conditional subsets of a dataset.
+
+    Parameters
+    ----------
+    x, y : strings, optional
+        Input variables; these should be column names in ``data``.
+    data : DataFrame
+        Tidy ("long-form") dataframe where each column is a variable and each
+        row is an observation.
+    hue, col, row : strings
+        Variables that define subsets of the data, which will be drawn on
+        separate facets in the grid. See the ``*_order`` parameters to control
+        the order of levels of this variable.
+    palette : palette name, list, or dict, optional
+        Colors to use for the different levels of the ``hue`` variable. Should
+        be something that can be interpreted by :func:`color_palette`, or a
+        dictionary mapping hue levels to matplotlib colors.
+    size : scalar, optional
+        Height (in inches) of each facet. See also: ``aspect``.
+    aspect : scalar, optional
+        Aspect ratio of each facet, so that ``aspect * size`` gives the width
+        of each facet in inches.
+    markers : matplotlib marker code or list of marker codes, optional
+        Markers for the scatterplot. If a list, each marker in the list will be
+        used for each level of the ``hue`` variable.
+    share{x,y} : bool, optional
+        If true, the facets will share y axes across columns and/or x axes
+        across rows.
+    {hue,col,row}_order : lists, optional
+        Order for the levels of the faceting variables. By default, this will
+        be the order that the levels appear in ``data`` or, if the variables
+        are pandas categoricals, the category order.
+    legend : bool, optional
+        If ``True`` and there is a ``hue`` variable, add a legend.
+    legend_out : bool, optional
+        If ``True``, the figure size will be extended, and the legend will be
+        drawn outside the plot on the center right.
+    x_estimator : callable that maps vector -> scalar, optional
+        Apply this function to each unique value of ``x`` and plot the
+        resulting estimate. This is useful when ``x`` is a discrete variable.
+        If ``x_ci`` is given, this estimate will be bootstrapped and a
+        confidence interval will be drawn.
+    x_bins : int or vector, optional
+        Bin the ``x`` variable into discrete bins and then estimate the central
+        tendency and a confidence interval. This binning only influences how
+        the scatterplot is drawn; the regression is still fit to the original
+        data.  This parameter is interpreted either as the number of
+        evenly-sized (not necessary spaced) bins or the positions of the bin
+        centers. When this parameter is used, it implies that the default of
+        ``x_estimator`` is ``numpy.mean``.
+    x_ci : "ci", "sd", int in [0, 100] or None, optional
+        Size of the confidence interval used when plotting a central tendency
+        for discrete values of ``x``. If ``"ci"``, defer to the value of the
+        ``ci`` parameter. If ``"sd"``, skip bootstrappig and show the standard
+        deviation of the observations in each bin.
+    scatter : bool, optional
+        If ``True``, draw a scatterplot with the underlying observations (or
+        the ``x_estimator`` values).
+    col_wrap : int, optional
+        “Wrap” the column variable at this width, so that the column facets span multiple rows. Incompatible with a row facet.
+    fit_reg : bool, optional
+        If ``True``, estimate and plot a regression model relating the ``x``
+        and ``y`` variables.
+    ci : int in [0, 100] or None, optional
+        Size of the confidence interval for the regression estimate. This will
+        be drawn using translucent bands around the regression line. The
+        confidence interval is estimated using a bootstrap; for large
+        datasets, it may be advisable to avoid that computation by setting
+        this parameter to None.
+    n_boot : int, optional
+        Number of bootstrap resamples used to estimate the ci. The default value
+        attempts to balance time and stability; you may want to increase this value
+        for “final” versions of plots.
+    order : int, optional
+        If ``order`` is greater than 1, use ``numpy.polyfit`` to estimate a
+        polynomial regression.
+    logistic : bool, optional
+        If ``True``, assume that ``y`` is a binary variable and use
+        ``statsmodels`` to estimate a logistic regression model. Note that this
+        is substantially more computationally intensive than linear regression,
+        so you may wish to decrease the number of bootstrap resamples
+        (``n_boot``) or set ``ci`` to None.
+    lowess : bool, optional
+        If ``True``, use ``statsmodels`` to estimate a nonparametric lowess
+        model (locally weighted linear regression). Note that confidence
+        intervals cannot currently be drawn for this kind of model.
+    robust : bool, optional
+        If ``True``, use ``statsmodels`` to estimate a robust regression. This
+        will de-weight outliers. Note that this is substantially more
+        computationally intensive than standard linear regression, so you may
+        wish to decrease the number of bootstrap resamples (``n_boot``) or set
+        ``ci`` to None.
+    logx : bool, optional
+        If ``True``, estimate a linear regression of the form y ~ log(x), but
+        plot the scatterplot and regression model in the input space. Note that
+        ``x`` must be positive for this to work.
+    {x,y}_jitter : floats, optional
+        Add uniform random noise of this size to either the ``x`` or ``y``
+        variables. The noise is added to a copy of the data after fitting the
+        regression, and only influences the look of the scatterplot. This can
+        be helpful when plotting variables that take discrete values.
+    {scatter,line}_kws : dictionaries
+        Additional keyword arguments to pass to ``plt.scatter`` and
+        ``plt.plot``.

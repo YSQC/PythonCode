@@ -1,0 +1,100 @@
+class JointGrid(builtins.object)
+ |  Grid for drawing a bivariate plot with marginal univariate plots.
+ |
+ |  Methods defined here:
+ |
+ |  __init__(self, x, y, data=None, size=6, ratio=5, space=0.2, dropna=True, xlim=None, ylim=None)
+ |      Set up the grid of subplots.
+ |
+ |      Parameters
+ |      ----------
+ |      x, y : strings or vectors
+ |          Data or names of variables in ``data``.
+ |      data : DataFrame, optional
+ |          DataFrame when ``x`` and ``y`` are variable names.
+ |      size : numeric
+ |          Size of each side of the figure in inches (it will be square).
+ |      ratio : numeric
+ |          Ratio of joint axes size to marginal axes height.
+ |      space : numeric, optional
+ |          Space between the joint and marginal axes
+ |      dropna : bool, optional
+ |          If True, remove observations that are missing from `x` and `y`.
+ |      {x, y}lim : two-tuples, optional
+ |          Axis limits to set before plotting.
+ |
+ |  annotate(self, func, xs, ys, template=None, stat=None, loc='best', **kwargs)
+ |      Annotate the plot with a statistic about the relationship.
+ |
+ |      Parameters
+ |      ----------
+ |      func : callable
+ |          Statistical function that maps the x, y vectors either to (val, p)
+ |          or to val.
+ |      xs, ys : scalars
+ |          The position to place the text. By default, this is in data
+ |          coordinates. The coordinate system can be changed using the
+ |          *transform* parameter.
+ |      template : string format template, optional
+ |          The template must have the format keys "stat" and "val";
+ |          if `func` returns a p value, it should also have the key "p".
+ |      stat : string, optional
+ |          Name to use for the statistic in the annotation, by default it
+ |          uses the name of `func`.
+ |      kwargs : key, value mappings
+ |          Other keyword arguments are passed to `ax.text`, which formats
+ |          the annotation.
+ |
+ |      Returns
+ |      -------
+ |      self : JointGrid instance.
+ |          Returns `self`.
+ |
+ |  plot(self, joint_func, marginal_func)
+ |      Shortcut to draw the full plot.
+ |
+ |      Use `plot_joint` and `plot_marginals` directly for more control.
+ |
+ |      Parameters
+ |      ----------
+ |      joint_func, marginal_func: callables
+ |          Functions to draw the bivariate and univariate plots.
+ |
+ |      Returns
+ |      -------
+ |      self : JointGrid instance
+ |          Returns `self`.
+ |
+ |  plot_joint(self, func, **kwargs)
+ |      Draw a bivariate plot of `x` and `y`.
+ |
+ |      Parameters
+ |      ----------
+ |      func : plotting callable
+ |          This must take two 1d arrays of data as the first two
+ |          positional arguments, and it must plot on the "current" axes.
+ |      kwargs : key, value mappings
+ |          Keyword argument are passed to the plotting function.
+ |
+ |      Returns
+ |      -------
+ |      self : JointGrid instance
+ |          Returns `self`.
+ |
+ |  plot_marginals(self, func, **kwargs)
+ |      Draw univariate plots for `x` and `y` separately.
+ |
+ |      Parameters
+ |      ----------
+ |      func : plotting callable
+ |          This must take a 1d array of data as the first positional
+ |          argument, it must plot on the "current" axes, and it must
+ |          accept a "vertical" keyword argument to orient the measure
+ |          dimension of the plot vertically.
+ |      kwargs : key, value mappings
+ |          Keyword argument are passed to the plotting function.
+ |
+ |      Returns
+ |      -------
+ |      self : JointGrid instance
+ |          Returns `self`.
