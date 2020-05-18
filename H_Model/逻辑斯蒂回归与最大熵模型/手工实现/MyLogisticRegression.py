@@ -13,7 +13,7 @@ class LogisticRegression:
         length = len(y)  # 训练数据样本个数
 
         def J(wight):
-            """模型在权重向量为wightx下的损失函数"""
+            """模型在权重向量为wight下的损失函数"""
             part_one = np.log(1 + np.exp(X @ wight))
             part_two = (X @ wight) * y
 
@@ -40,7 +40,7 @@ class LogisticRegression:
         self.intercept_ = self._w[-1]  # self._w最后一项为截距项
         self.coef_ = self._w[0:-1]
 
-        return J(self._w)  # 返回迭代完成后的损失值
+        return J(self._w)  # 返回迭代完成后模型的损失值
 
     def predict_proba(self, X_predict):
         """待预测数据集X_predict的y=1概率"""
