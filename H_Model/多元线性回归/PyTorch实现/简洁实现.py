@@ -15,9 +15,8 @@ labels = true_w[0] * features[:, 0] + true_w[1] * features[:, 1] + true_b
 labels += torch.normal(0, 0.01, size=labels.size()) # 添加噪音
 
 batch_size = 10
-dataset = Data.TensorDataset(features, labels) # 包装数据集
+dataset = Data.TensorDataset(features, labels) # 数据包装
 
-# 把 dataset 放入 DataLoader
 data_iter = Data.DataLoader(
     dataset=dataset,
     batch_size=batch_size,
@@ -38,7 +37,7 @@ class LinearNet(nn.Module):
 
 net = LinearNet(num_inputs)
 
-# 初始化模型参数
+# 初始化模型参数(也可以不进行初始化,nn.Linear默认进行了kaiming初始化)
 init.normal_(net.linear.weight, mean=0.0, std=0.01)
 init.constant_(net.linear.bias, val=0.0)
 
@@ -52,7 +51,7 @@ num_epochs = 20 # 最大训练轮数
 if __name__ == '__main__':
     for epoch in range(1, num_epochs + 1):
         l = 0
-        for X, y in data_iter: # 多进程需要在main函数中运行
+        for X, y in data_iter: # .py文件多进程需要在if __name__ == '__main__':代码块中运行
             output = net(X)
             l = loss(output, y.view(-1, 1))
             optimizer.zero_grad()

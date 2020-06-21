@@ -6,5 +6,7 @@
 *.idea
 .ipynb_checkpoints
 *.iml
+# *tb为tensorboard.SummaryWriter生成的文件
+*tb
 out
 gen

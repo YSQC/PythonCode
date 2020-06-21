@@ -30,8 +30,9 @@ class LR(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
+        """模型的前向传播"""
         x = self.features(x)
-        x = self.sigmoid(x)
+        x = self.sigmoid(x) # 逻辑斯蒂回归使用的为sigmoid函数
         return x
 
 
