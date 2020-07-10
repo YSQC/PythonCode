@@ -1,4 +1,3 @@
-
 class print_hello:
     def __init__(self, name):
         self.name = name
@@ -9,7 +8,6 @@ class print_hello:
 
     def python(self):
         print(self.name, 'love', 'python')
-
 
 
 def print_world():

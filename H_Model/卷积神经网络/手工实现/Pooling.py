@@ -1,6 +1,7 @@
 import numpy as np
-from H_Model.卷积神经网络.手工实现.im2col import  im2col
-from H_Model.卷积神经网络.手工实现.col2im import col2im
+from im2col import  im2col
+from col2im import col2im
+
 
 class Pooling:
     """池化层的实现"""

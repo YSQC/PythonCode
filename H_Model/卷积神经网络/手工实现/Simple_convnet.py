@@ -1,10 +1,10 @@
 import numpy as np
 from collections import OrderedDict # 有序字典
-from H_Model.卷积神经网络.手工实现.Convolution import Convolution # 绝对路径导入,也可以使用相对路径进行导入
-from H_Model.卷积神经网络.手工实现.SoftmaxWithLoss import SoftmaxWithLoss
-from H_Model.卷积神经网络.手工实现.FullMesh import FullMesh
-from H_Model.卷积神经网络.手工实现.Activations import Relu
-from H_Model.卷积神经网络.手工实现.Pooling import Pooling
+from Convolution import Convolution # 相对路径导入,也可以使用绝对路径进行导入
+from SoftmaxWithLoss import SoftmaxWithLoss
+from FullMesh import FullMesh
+from Activations import Relu
+from Pooling import Pooling
 
 class SimpleConvNet:
     """

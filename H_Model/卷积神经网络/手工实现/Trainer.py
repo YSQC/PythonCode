@@ -1,5 +1,5 @@
 import numpy as np
-from H_Model.卷积神经网络.手工实现.Optimizer import SGD
+from Optimizer import SGD
 
 
 class Trainer:
