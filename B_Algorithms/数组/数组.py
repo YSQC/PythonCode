@@ -1,4 +1,5 @@
 class MyArray:
+    """自定义一个数组类"""
     def __init__(self, capacity):
         self._data = []
         self._capacity = capacity # 最大容量
